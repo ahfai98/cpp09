@@ -6,7 +6,7 @@
 /*   By: jyap <jyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 21:29:28 by jyap              #+#    #+#             */
-/*   Updated: 2024/11/17 16:54:59 by jyap             ###   ########.fr       */
+/*   Updated: 2024/11/17 17:21:35 by jyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,28 @@ static std::vector<unsigned int> mergeVecs(std::vector<unsigned int> &left, std:
 
 static std::vector<unsigned int> mergeInsertVec(std::vector<unsigned int> &vec)
 {
-	// Base case: a vector with zero or one elements is already sorted
+	const size_t threshold = 10;
 	if (vec.size() <= 1)
 	{
+		return (vec);
+	}
+	else if (vec.size() < threshold) //use Insertion sort for arrays with size of less than the threshold
+	{
+		//set the second element as key, then compare with previous element
+		// if previous element is larger than key, move the element back
+		// once the previous element not larger than key, the key takes the current position, with all numbers larger behind the key
+		// get the next element as key and repeat
+		for (size_t i = 1; i < vec.size(); ++i)
+		{
+			unsigned int key = vec[i];
+			size_t j = i;
+			while (j > 0 && vec[j - 1] > key)
+			{
+				vec[j] = vec[j - 1];
+				--j;
+			}
+			vec[j] = key;
+		}
 		return (vec);
 	}
 
